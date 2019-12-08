@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/regon"
+    app:startDestination="@id/home">
+
+    <fragment
+        android:id="@+id/home"
+        android:name="com.example.wykaz_podatnikow_vat.ui.home.HomeFragment"
+        android:label="home_fragment"
+        tools:layout="@layout/home_fragment" />
+    <fragment
+        android:id="@+id/bank"
+        android:name="com.example.wykaz_podatnikow_vat.ui.bank.BankFragment"
+        tools:layout="@layout/bank_fragment"
+        android:label="BankFragment" />
+    <fragment
+        android:id="@+id/history"
+        android:name="com.example.wykaz_podatnikow_vat.ui.history.HistoryFragment"
+        tools:layout="@layout/history_fragment"
+        android:label="HistoryFragment" />
+    <fragment
+        android:id="@+id/verify"
+        android:name="com.example.wykaz_podatnikow_vat.ui.verify.VerifyFragment"
+        tools:layout="@layout/verify_fragment"
+        android:label="VerifyFragment" />
+    <fragment
+        android:id="@+id/code_regon"
+        android:name="com.example.wykaz_podatnikow_vat.ui.regon.RegonFragment"
+        android:label="regon_fragment"
+        tools:layout="@layout/regon_fragment" />
+</navigation>
