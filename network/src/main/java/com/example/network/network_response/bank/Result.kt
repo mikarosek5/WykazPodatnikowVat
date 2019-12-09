@@ -1,8 +1,9 @@
 package com.example.network.network_response.bank
 
 
+import com.example.network.network_response.shared.Subject
 import com.squareup.moshi.Json
-import javax.security.auth.Subject
+
 
 data class Result(
     @Json(name = "requestId")

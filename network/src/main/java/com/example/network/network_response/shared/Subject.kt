@@ -21,27 +21,27 @@ data class Subject(
     @Json(name = "pesel")
     val pesel: String,
     @Json(name = "registrationDenialBasis")
-    val registrationDenialBasis: String,
+    val registrationDenialBasis: String?,
     @Json(name = "registrationDenialDate")
-    val registrationDenialDate: String,
+    val registrationDenialDate: String?,
     @Json(name = "registrationLegalDate")
-    val registrationLegalDate: String,
+    val registrationLegalDate: String?,
     @Json(name = "regon")
     val regon: String,
     @Json(name = "removalBasis")
-    val removalBasis: String,
+    val removalBasis: String?,
     @Json(name = "removalDate")
-    val removalDate: Any,
+    val removalDate: String?,
     @Json(name = "representatives")
     val representatives: List<Representative>,
     @Json(name = "residenceAddress")
-    val residenceAddress: String,
+    val residenceAddress: String?,
     @Json(name = "restorationBasis")
-    val restorationBasis: String,
+    val restorationBasis: String?,
     @Json(name = "restorationDate")
-    val restorationDate: Any,
+    val restorationDate: Any?,
     @Json(name = "statusVat")
     val statusVat: String,
     @Json(name = "workingAddress")
-    val workingAddress: Any
+    val workingAddress: Any?
 )
