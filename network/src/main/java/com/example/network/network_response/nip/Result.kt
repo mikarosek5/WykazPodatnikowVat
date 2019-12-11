@@ -8,5 +8,5 @@ data class Result(
     @Json(name = "requestId")
     val requestId: String,
     @Json(name = "subject")
-    val subject: Subject
+    val subject: Subject?
 )

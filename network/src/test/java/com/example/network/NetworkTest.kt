@@ -36,13 +36,14 @@ class NetworkTest: KoinTest {
 
         runBlocking {
             val nipResponse = networkSource.getInfoByNip(1424034322, LocalDate.of(2019,12,9))
-            assert(nipResponse.result.subject.nip == "1424034322")
+            assert(nipResponse.result.subject?.nip == "1424034322")
         }
     }
     @Test
     fun checkByRegon(){
         runBlocking {
-            val regonResponse = networkSource.getInfoByRegon(73048407072664,LocalDate.of(2019,12,9)).result.subject.accountNumbers[0]
+            val regonResponse = networkSource.getInfoByRegon(73048407072664,LocalDate.of(2019,12,9))
+                .result.subject?.accountNumbers?.first()
             assert(regonResponse=="20182432668907075444215211")
         }
     }
@@ -51,6 +52,25 @@ class NetworkTest: KoinTest {
             val bankAccResponse =
                 networkSource.getInfoByBankAccount("31872831997646186715413833", LocalDate.of(2019,12,9))
             assert(bankAccResponse.result.subjects[0].partners[0].nip=="1100291110")
+        }
+    }
+    @Test fun checkByNipEmpty(){
+        runBlocking {
+            val nipResponse = networkSource.getInfoByNip(5219586281,LocalDate.of(2019,12,9))
+            assert(nipResponse.result.subject==null)
+        }
+    }
+    @Test fun checkByRegonEmpty(){
+        runBlocking {
+            val nipResponse = networkSource.getInfoByRegon(236757803,LocalDate.of(2019,12,9))
+            assert(nipResponse.result.subject==null)
+        }
+    }
+
+    @Test fun checkByAccountNumberEmpty(){
+        runBlocking {
+            val bankResponse = networkSource.getInfoByBankAccount("58820010349588884152033320",LocalDate.of(2019,12,9))
+            assert(bankResponse.result.subjects.isEmpty())
         }
     }
 
