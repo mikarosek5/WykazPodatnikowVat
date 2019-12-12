@@ -4,7 +4,7 @@ import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import database.converters.DataConverter
-import database.dao.TaxPayerDao
+import database.dao.*
 import database.entity.*
 @TypeConverters(DataConverter::class)
 @Database(
@@ -18,11 +18,11 @@ import database.entity.*
     version = 1,
     exportSchema = false
 )
-abstract class TaxDatabase : RoomDatabase() {
-
-    abstract fun taxPayerDao(): TaxPayerDao
-    companion object{
-
-    }
-
+internal abstract class TaxDatabase : RoomDatabase() {
+    abstract fun taxPayerDao():TaxPayerDao
+    abstract fun subjectDao():SubjectDao
+    abstract fun bankAccountDao(): BankAccountDao
+    abstract fun partnerDao(): PartnerDao
+    abstract fun representativeDao(): RepresentativeDao
+    abstract fun authorizedClerkDao(): AuthorizedClerDao
 }

@@ -7,8 +7,9 @@ import androidx.room.PrimaryKey
 class Partner(
     @PrimaryKey
     val nip: String,
-    val companyName: String,
-    val firstName: String,
-    val lastName: String,
-    val pesel: String?
+    val companyName: String?,
+    val firstName: String?,
+    val lastName: String?,
+    val pesel: String?,
+    val subjectId:Long
 )

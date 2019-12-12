@@ -5,8 +5,8 @@ import org.threeten.bp.LocalDate
 
 internal class DataConverter {
     @TypeConverter
-    fun fromLocalDateToString(date: LocalDate?) = date.toString()
+    fun fromLocalDateToString(date: LocalDate?):String? = date.toString()
 
     @TypeConverter
-    fun fromStringToLocalDate(stringDate: String?) = LocalDate.parse(stringDate)
+    fun fromStringToLocalDate(stringDate: String?):LocalDate? = LocalDate.parse(stringDate)
 }

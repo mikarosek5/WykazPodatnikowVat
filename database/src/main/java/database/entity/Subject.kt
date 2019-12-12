@@ -5,9 +5,8 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "Subject")
 class Subject(
-    @PrimaryKey val subjectId: Long,
+    val subjectNip: String?,
     val name: String?,
-    val nip: String?,
     val regon: String?,
     val pesel: String?,
     val krs: String,
@@ -21,9 +20,7 @@ class Subject(
     val residenceAddress: String?,
     val workingAdress: String?,
     val hasVirtualAccounts: Boolean?,
-//    val accountNumbers: List<BankAccountNumber>,
-//    val representatives: List<Representative>?,
-//    val authorizedClerks: List<AuthorizedClerk>?,
-//    val partners: List<Partner>?,
     val taxPayerUid:String
-)
+){
+    @PrimaryKey(autoGenerate = true) var subjectId: Long=0
+}

@@ -4,18 +4,18 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Transaction
-import database.embendded.TaxPayerWithSubject
+import database.entity.TaxPayer
+import database.entity.TaxPayerWithSubjects
+import io.reactivex.Completable
+import io.reactivex.Flowable
 
 @Dao
 interface TaxPayerDao {
-    @Transaction
-    @Query("SELECT * FROM TaxPayer")
-    fun getAllTaxPayers() : List<TaxPayerWithSubject>
-
-    @Query("SELECT * FROM TaxPayer WHERE uid=:uid")
-    fun getTaxPayerById(uid:String) : TaxPayerWithSubject
 
     @Insert
-    fun insertTaxPayer(taxPayerWithSubject: TaxPayerWithSubject) //Completable Todo
+    fun insert(taxPayer:TaxPayer):Completable
 
+    @Transaction
+    @Query("SELECT * FROM TaxPayer")
+    fun getTaxPayerWithSubjects() : Flowable<List<TaxPayerWithSubjects>>
 }
