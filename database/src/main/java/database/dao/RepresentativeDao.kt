@@ -8,11 +8,14 @@ import io.reactivex.Completable
 import io.reactivex.Flowable
 
 @Dao
-interface RepresentativeDao {
+internal interface RepresentativeDao {
 
     @Insert
     fun insert(representative: Representative):Completable
 
+    @Insert
+    fun insertMany(vararg representative: Representative):Completable
+
     @Query("Select * from Representative where subjectId = :subjectId")
-    fun getAllBySubjectId(subjectId:Long):Flowable<List<Representative>>
+    fun getAllBySubjectId(subjectId:String):Flowable<List<Representative>>
 }

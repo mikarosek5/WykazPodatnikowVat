@@ -1,4 +1,4 @@
-package database
+package database.tax_database
 
 import androidx.room.Database
 import androidx.room.RoomDatabase

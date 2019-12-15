@@ -1,7 +1,9 @@
-package database.entity
+package database.merged
 
 import androidx.room.Embedded
 import androidx.room.Relation
+import database.entity.Subject
+import database.entity.TaxPayer
 
 class TaxPayerWithSubjects(
     @Embedded val taxPayer: TaxPayer,

@@ -6,8 +6,9 @@ import androidx.room.OnConflictStrategy
 import database.entity.Subject
 
 @Dao
-interface SubjectDao {
-
+internal interface SubjectDao {
     @Insert
     fun insert(subject: Subject):Completable
+    @Insert
+    fun insertMany(vararg subject: Subject):Completable
 }

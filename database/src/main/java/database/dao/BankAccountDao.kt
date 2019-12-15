@@ -8,11 +8,14 @@ import io.reactivex.Completable
 import io.reactivex.Flowable
 
 @Dao
-interface BankAccountDao {
+internal interface BankAccountDao {
 
     @Insert
     fun insert(bankAccountNumber: BankAccountNumber):Completable
 
+    @Insert
+    fun insertMany(vararg representative: BankAccountNumber):Completable
+
     @Query("select * from BankAccountNumber where subjectId=:subjectId")
-    fun getAllBySubjectId(subjectId:Long):Flowable<List<BankAccountNumber>>
+    fun getAllBySubjectId(subjectId:String):Flowable<List<BankAccountNumber>>
 }

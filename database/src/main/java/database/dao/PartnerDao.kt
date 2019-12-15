@@ -8,13 +8,16 @@ import io.reactivex.Completable
 import io.reactivex.Flowable
 
 @Dao
-interface PartnerDao {
+internal interface PartnerDao {
 
     @Insert
     fun insert(partner: Partner):Completable
 
+    @Insert
+    fun insertMany(vararg representative: Partner):Completable
+
     @Query("Select * from partner where subjectId=:subject_id")
-    fun getAllBySubjectId(subject_id:Long): Flowable<List<Partner>>
+    fun getAllBySubjectId(subject_id:String): Flowable<List<Partner>>
 
 
 }

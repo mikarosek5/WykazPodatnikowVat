@@ -3,12 +3,12 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 android {
-    compileSdkVersion 28
+    compileSdkVersion 29
 
 
     defaultConfig {
         minSdkVersion 22
-        targetSdkVersion 28
+        targetSdkVersion 29
         versionCode 1
         versionName "1.0"
 
@@ -17,6 +17,7 @@ android {
         kapt {
             arguments {
                 arg("room.schemaLocation", "$projectDir/schemas".toString())
+                arg("room.incremental","true")
             }
         }
     }
@@ -51,9 +52,17 @@ dependencies {
     implementation "androidx.room:room-rxjava2:2.2.2"
     implementation "io.reactivex.rxjava2:rxkotlin:2.4.0"
 
+    // Koin for Android
+    implementation "org.koin:koin-android:$koin"
+// Koin Android Scope features
+    implementation "org.koin:koin-android-scope:$koin"
+// Koin Android Experimental features
+    implementation "org.koin:koin-android-ext:$koin"
+    testImplementation "org.koin:koin-test:$koin"
+    androidTestImplementation "org.koin:koin-test:$koin"
+
 
     androidTestImplementation "android.arch.core:core-testing:1.1.1"
-
 
 
 }
