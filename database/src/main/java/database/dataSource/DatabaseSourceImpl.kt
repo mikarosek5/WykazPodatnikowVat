@@ -1,26 +1,20 @@
 package database.dataSource
 
 import database.dao.*
-import database.dao.BankAccountDao
-import database.dao.PartnerDao
-import database.dao.RepresentativeDao
-import database.dao.SubjectDao
-import database.dao.TaxPayerDao
 import database.dataSource.save.TaxToSave
 import database.entity.*
 import database.merged.TaxPayerWithSubjects
 import io.reactivex.Completable
 import io.reactivex.Flowable
-import io.reactivex.Single
 
-internal class DatabaseDatasourceImpl(
+internal class DatabaseSourceImpl(
     private val taxPayerDao: TaxPayerDao,
     private val subjectDao: SubjectDao,
     private val representativeDao: RepresentativeDao,
     private val partnerDao: PartnerDao,
     private val bankAccountDao: BankAccountDao,
     private val authorizedClerDao: AuthorizedClerDao
-) : DatabaseDatasource {
+) : DatabaseSource {
     override suspend fun saveFullTax(taxToSave: TaxToSave): Completable {
         return Completable.concatArray(
             taxPayerDao.insert(taxToSave.taxPayer),
@@ -51,6 +45,8 @@ internal class DatabaseDatasourceImpl(
 
     override suspend fun getAuthorizedClerk(subjectId: String) =
         authorizedClerDao.getAllBySubjectId(subjectId)
+
+    override suspend fun getTaxPayerWithSubjectsById(uid: String) = taxPayerDao.findTaxPayerWithSubjectsById(uid)
 
     private fun saveSubjects(subjects: List<Subject>) =
         subjectDao.insertMany(*subjects.toTypedArray())

@@ -3,7 +3,7 @@ package com.example.network.network_source
 import com.example.network.service.TaxpayerList
 import org.threeten.bp.LocalDate
 
-class NetworkSourceImpl(private val service: TaxpayerList) : NetworkSource {
+internal class NetworkSourceImpl(private val service: TaxpayerList) : NetworkSource {
     override suspend fun getInfoByBankAccount(
         bankAccountNumber: String,
         date: LocalDate

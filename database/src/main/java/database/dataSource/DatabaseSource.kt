@@ -8,11 +8,12 @@ import database.entity.Representative
 import database.merged.TaxPayerWithSubjects
 import io.reactivex.Completable
 import io.reactivex.Flowable
-import io.reactivex.Single
 
-interface DatabaseDatasource {
+interface DatabaseSource {
 
     suspend fun getTaxPayerWithSubjects():Flowable<List<TaxPayerWithSubjects>>
+
+    suspend fun getTaxPayerWithSubjectsById(uid:String):Flowable<TaxPayerWithSubjects>
 
     suspend fun saveFullTax(taxToSave: TaxToSave):Completable
 

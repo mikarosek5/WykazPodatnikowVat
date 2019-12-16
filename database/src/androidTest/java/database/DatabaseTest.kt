@@ -3,7 +3,7 @@ package database
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
-import database.dataSource.DatabaseDatasource
+import database.dataSource.DatabaseSource
 import database.dataSource.save.TaxToSave
 import kotlinx.coroutines.runBlocking
 import org.junit.After
@@ -30,7 +30,7 @@ class DatabaseTest : KoinTest {
     val instantTaskExecutorRule: InstantTaskExecutorRule = InstantTaskExecutorRule()
 
     //    private val taxDatabase:TaxDatabase by inject()
-    private val taxPayerData: DatabaseDatasource by inject()
+    private val taxPayerData: DatabaseSource by inject()
 
     @Before
     fun before() {

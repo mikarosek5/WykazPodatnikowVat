@@ -13,5 +13,5 @@ data class AuthorizedClerk(
     @Json(name = "nip")
     val nip: String,
     @Json(name = "pesel")
-    val pesel: Any?
+    val pesel: String?
 )

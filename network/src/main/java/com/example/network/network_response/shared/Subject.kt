@@ -39,9 +39,9 @@ data class Subject(
     @Json(name = "restorationBasis")
     val restorationBasis: String?,
     @Json(name = "restorationDate")
-    val restorationDate: Any?,
+    val restorationDate: String?,
     @Json(name = "statusVat")
     val statusVat: String,
     @Json(name = "workingAddress")
-    val workingAddress: Any?
+    val workingAddress: String?
 )
