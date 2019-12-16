@@ -8,6 +8,7 @@ import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import okhttp3.OkHttpClient
 import org.koin.dsl.module
 import retrofit2.Retrofit
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.moshi.MoshiConverterFactory
 
 val networkModule = module {
@@ -24,9 +25,10 @@ private fun moshiConverter():MoshiConverterFactory =
 private fun clientHttp() = OkHttpClient.Builder().build()
 private fun retrofit(httpClient: OkHttpClient,jsonConverter:MoshiConverterFactory) =
     Retrofit.Builder()
-        .baseUrl("https://wl-test.mf.gov.pl/")
-//        .baseUrl("http://localhost:8080/")
+//        .baseUrl("https://wl-test.mf.gov.pl/")
+        .baseUrl("http://localhost:8080/")
         .addConverterFactory(jsonConverter)
+        .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
         .client(httpClient)
         .build()
         .create(TaxpayerList::class.java)
