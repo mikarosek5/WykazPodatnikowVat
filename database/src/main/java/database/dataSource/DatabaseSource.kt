@@ -13,9 +13,9 @@ interface DatabaseSource {
 
     suspend fun getTaxPayerWithSubjects():Flowable<List<TaxPayerWithSubjects>>
 
-    suspend fun getTaxPayerWithSubjectsById(uid:String):Flowable<TaxPayerWithSubjects>
+    fun getTaxPayerWithSubjectsById(uid:String):Flowable<TaxPayerWithSubjects>
 
-    suspend fun saveFullTax(taxToSave: TaxToSave):Completable
+    fun saveFullTax(taxToSave: TaxToSave):Completable
 
     suspend fun getBankAccounts(subjectId:String):Flowable<List<BankAccountNumber>>
 

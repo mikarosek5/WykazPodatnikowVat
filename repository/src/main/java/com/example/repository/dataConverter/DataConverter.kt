@@ -12,7 +12,7 @@ import org.threeten.bp.LocalDate
 // entity and use .map function, it require additional module like core to make visible
 // response and entity for both modules, this solution is kind of hack if somebody want to add new
 //things in app he have to refactor network and database module
-fun BankAccountResponse.convert(): TaxToSave {
+internal fun BankAccountResponse.convert(): TaxToSave {
     return TaxToSave(
         TaxPayer(this.result.requestId, LocalDate.now()),
         subject(this.result.subjects, this.result.requestId),
@@ -23,7 +23,7 @@ fun BankAccountResponse.convert(): TaxToSave {
     )
 }
 
-fun NipResponse.convert(): TaxToSave {
+internal fun NipResponse.convert(): TaxToSave {
     return TaxToSave(
         TaxPayer(this.result.requestId, LocalDate.now()),
         subject(listOf(this.result.subject), this.result.requestId),
@@ -34,7 +34,7 @@ fun NipResponse.convert(): TaxToSave {
     )
 }
 
-fun RegonResponse.convert(): TaxToSave {
+internal fun RegonResponse.convert(): TaxToSave {
     return TaxToSave(
         TaxPayer(this.result.requestId, LocalDate.now()),
         subject(listOf(this.result.subject), this.result.requestId),

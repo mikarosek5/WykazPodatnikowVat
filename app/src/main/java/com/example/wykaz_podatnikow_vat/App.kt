@@ -2,6 +2,7 @@ package com.example.wykaz_podatnikow_vat
 
 import android.app.Application
 import com.example.network.networkModule
+import com.example.repository.repositoryModule
 
 import com.jakewharton.threetenabp.AndroidThreeTen
 import database.databaseModule
@@ -12,7 +13,7 @@ class App :Application(){
     override fun onCreate() {
         super.onCreate()
         startKoin {
-            modules(listOf(networkModule,databaseModule))
+            modules(listOf(networkModule,databaseModule, repositoryModule))
             androidLogger()
             AndroidThreeTen.init(this@App)
         }

@@ -15,7 +15,7 @@ internal class DatabaseSourceImpl(
     private val bankAccountDao: BankAccountDao,
     private val authorizedClerDao: AuthorizedClerDao
 ) : DatabaseSource {
-    override suspend fun saveFullTax(taxToSave: TaxToSave): Completable {
+    override  fun saveFullTax(taxToSave: TaxToSave): Completable {
         return Completable.concatArray(
             taxPayerDao.insert(taxToSave.taxPayer),
             saveSubjects(taxToSave.subjectList),
@@ -46,7 +46,7 @@ internal class DatabaseSourceImpl(
     override suspend fun getAuthorizedClerk(subjectId: String) =
         authorizedClerDao.getAllBySubjectId(subjectId)
 
-    override suspend fun getTaxPayerWithSubjectsById(uid: String) = taxPayerDao.findTaxPayerWithSubjectsById(uid)
+    override fun getTaxPayerWithSubjectsById(uid: String) = taxPayerDao.findTaxPayerWithSubjectsById(uid)
 
     private fun saveSubjects(subjects: List<Subject>) =
         subjectDao.insertMany(*subjects.toTypedArray())
