@@ -25,8 +25,8 @@ private fun moshiConverter():MoshiConverterFactory =
 private fun clientHttp() = OkHttpClient.Builder().build()
 private fun retrofit(httpClient: OkHttpClient,jsonConverter:MoshiConverterFactory) =
     Retrofit.Builder()
-//        .baseUrl("https://wl-test.mf.gov.pl/")
-        .baseUrl("http://localhost:8080/")
+        .baseUrl("https://wl-test.mf.gov.pl/")
+//        .baseUrl("http://localhost:8080/")
         .addConverterFactory(jsonConverter)
         .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
         .client(httpClient)

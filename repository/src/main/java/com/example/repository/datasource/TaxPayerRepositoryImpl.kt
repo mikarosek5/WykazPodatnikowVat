@@ -1,16 +1,21 @@
 package com.example.repository.datasource
 
+import android.util.Log
 import com.example.network.network_source.NetworkSource
 import com.example.repository.dataConverter.convert
 import database.dataSource.DatabaseSource
 import database.dataSource.save.TaxToSave
 import database.merged.TaxPayerWithSubjects
 import io.reactivex.Flowable
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.rxkotlin.subscribeBy
+import io.reactivex.schedulers.Schedulers
 import org.threeten.bp.LocalDate
 
 internal class TaxPayerRepositoryImpl(
     private val networkSource: NetworkSource,
-    private val databaseSource: DatabaseSource
+    private val databaseSource: DatabaseSource,
+    val taxDisposable: CompositeDisposable
 ) : TaxPayerRepository {
 
 
@@ -18,24 +23,29 @@ internal class TaxPayerRepositoryImpl(
         bankNumber: String,
         date: LocalDate
     ): Flowable<TaxPayerWithSubjects> {
-        val result = networkSource.getInfoByBankAccount(bankNumber, date).blockingGet().convert()
-        saveResultToBase(result)
-        return databaseSource.getTaxPayerWithSubjectsById(result.taxPayer.uid)
+        makeNetworkCall(bankNumber,date)
+        return databaseSource.getLastTaxPayerWithSubjects()
     }
-    private fun saveResultToBase(taxToSave: TaxToSave){
+
+
+    private fun makeNetworkCall(
+        bankNumber: String,
+        date: LocalDate
+    ) {
+        taxDisposable.add(networkSource.getInfoByBankAccount(bankNumber, date)
+            .subscribeOn(Schedulers.io())
+            .observeOn(Schedulers.io())
+            .map { it.convert() }
+            .subscribeBy(
+                onSuccess = { saveResultToBase(it) },
+                onError = { Log.d("MYERROR",it.message?:"")}
+            )
+        )
+    }
+
+    private fun saveResultToBase(taxToSave: TaxToSave) {
         databaseSource.saveFullTax(taxToSave)
     }
-
-
-
-    //    override suspend fun getByBankNumber(bankNumber: String, date: LocalDate) {
-//        val result = networkSource.getInfoByBankAccount(bankNumber, date).convert()
-//        val resultId = result.taxPayer.uid
-//        databaseSource.saveFullTax(result)
-//        _observable =
-//            databaseSource.getTaxPayerWithSubjectsById(resultId).observeOn(Schedulers.io())
-//                .toObservable()
-//    }
 
     override suspend fun getByNipNumber() {
         TODO("implement cache")

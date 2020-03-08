@@ -6,6 +6,7 @@ import com.example.network.network_response.regon.RegonResponse
 import database.dataSource.save.TaxToSave
 import database.entity.*
 import org.threeten.bp.LocalDate
+import org.threeten.bp.LocalDateTime
 
 
 //This is not best way to convert data types better option is to create secondary constructor in
@@ -14,7 +15,7 @@ import org.threeten.bp.LocalDate
 //things in app he have to refactor network and database module
 internal fun BankAccountResponse.convert(): TaxToSave {
     return TaxToSave(
-        TaxPayer(this.result.requestId, LocalDate.now()),
+        TaxPayer(this.result.requestId, LocalDateTime.now()),
         subject(this.result.subjects, this.result.requestId),
         representative(result.subjects, this.result.requestId),
         partner(result.subjects, this.result.requestId),
@@ -25,7 +26,7 @@ internal fun BankAccountResponse.convert(): TaxToSave {
 
 internal fun NipResponse.convert(): TaxToSave {
     return TaxToSave(
-        TaxPayer(this.result.requestId, LocalDate.now()),
+        TaxPayer(this.result.requestId, LocalDateTime.now()),
         subject(listOf(this.result.subject), this.result.requestId),
         representative(listOf(this.result.subject), this.result.requestId),
         partner(listOf(this.result.subject), this.result.requestId),
@@ -36,7 +37,7 @@ internal fun NipResponse.convert(): TaxToSave {
 
 internal fun RegonResponse.convert(): TaxToSave {
     return TaxToSave(
-        TaxPayer(this.result.requestId, LocalDate.now()),
+        TaxPayer(this.result.requestId, LocalDateTime.now()),
         subject(listOf(this.result.subject), this.result.requestId),
         representative(listOf(this.result.subject), this.result.requestId),
         partner(listOf(this.result.subject), this.result.requestId),

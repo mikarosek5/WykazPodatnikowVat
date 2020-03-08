@@ -8,6 +8,7 @@ import database.entity.TaxPayer
 import database.merged.TaxPayerWithSubjects
 import io.reactivex.Completable
 import io.reactivex.Flowable
+import java.time.LocalDateTime
 
 @Dao
 internal interface TaxPayerDao {
@@ -25,4 +26,8 @@ internal interface TaxPayerDao {
 
     @Query("DELETE FROM TAXPAYER WHERE uid = :uid")
     fun deleteById(uid:String):Completable
+
+    @Transaction
+    @Query("SELECT * FROM TAXPAYER ORDER BY downloadedDate DESC LIMIT 1")
+    fun getLastTaxPayerWithSubjects() : Flowable<TaxPayerWithSubjects>
 }

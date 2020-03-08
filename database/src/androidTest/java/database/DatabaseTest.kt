@@ -61,6 +61,21 @@ class DatabaseTest : KoinTest {
                     )
                 )
             ).test().assertNoErrors().assertComplete()
+
+            taxPayerData.saveFullTax(
+                TaxToSave(
+                    taxPayer2, listOf(subject, subject2), listOf(
+                        representative, representative2, representative3
+                    ), listOf(partner, partner2), listOf(
+                        bankAccountNumber,
+                        bankAccountNumber2,
+                        bankAccountNumber3,
+                        bankAccountNumber4
+                    ), listOf(
+                        authorizedClerk, authorizedClerk2, authorizedClerk3
+                    )
+                )
+            ).test().assertNoErrors().assertComplete()
         }
     }
 
@@ -178,58 +193,25 @@ class DatabaseTest : KoinTest {
                 it.isNotEmpty()
             }
             taxPayerData.deleteByTaxUid("1").test().assertNoErrors().assertComplete()
-            taxPayerData.getTaxPayerWithSubjects().test().assertValue {
-                it.isEmpty()
-            }
+            taxPayerData.getTaxPayerWithSubjectsById("1").test().assertEmpty()
+        }
+    }
+    @Test
+    fun testGetLast(){
+        runBlocking {
+            setupTestData()
+            taxPayerData.getLastTaxPayerWithSubjects()
+                .test()
+                .assertNoErrors()
+                .assertValue {
+                    it.taxPayer.uid=="2"
+                }
+
         }
     }
 
 
 
 }
-
-
-//
-//    @Test
-//    fun testCascadeDelete() {
-//        runBlocking {
-//            val taxPayer = TaxPayer("1", LocalDate.now())
-//            taxDatabase.taxPayerDao().insert(taxPayer).test().assertComplete()
-//            val subject = Subject(
-//                "1234321",
-//                "111",
-//                "222",
-//                "999",
-//                "321",
-//                "123:321",
-//                "aaaaaa",
-//                "bbbbbbb",
-//                "ccccc",
-//                "asdasd",
-//                "sdgfdfsgfd",
-//                "sdfsdfsdf",
-//                "sdfsdf",
-//                "sdfsdf",
-//                false,
-//                "1"
-//            )
-//            taxDatabase.subjectDao().insert(subject).test().assertComplete()
-//            taxDatabase.representativeDao()
-//                .insert(
-//                    Representative(
-//                        "1234321",
-//                        "aaa",
-//                        "aaaa",
-//                        "aaa",
-//                        "123123",
-//                        "1234321"
-//                    )
-//                ).test().assertComplete()
-//            taxDatabase.taxPayerDao().deleteById("1").test().assertComplete()
-//            taxDatabase.representativeDao().getAllBySubjectId("1234321").test().assertValue {
-//                it.isEmpty()
-//            }
-//        }
-//    }
 
 

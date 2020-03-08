@@ -6,16 +6,19 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Observer
 
 import com.example.wykaz_podatnikow_vat.R
+import com.example.wykaz_podatnikow_vat.ui.util.Data
+import database.merged.TaxPayerWithSubjects
+import kotlinx.android.synthetic.main.bank_fragment.*
+import org.koin.android.viewmodel.ext.android.viewModel
+import org.threeten.bp.LocalDate
 
 class BankFragment : Fragment() {
 
-    companion object {
-        fun newInstance() = BankFragment()
-    }
 
-    private lateinit var viewModel: BankViewModel
+    private val bankViewModel:BankViewModel by viewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -26,8 +29,32 @@ class BankFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(this).get(BankViewModel::class.java)
-        // TODO: Use the ViewModel
+        setupObserver()
+        setupButton()
+    }
+
+    private fun setupButton() {
+        button.setOnClickListener {
+            bankViewModel.getTaxPayerByBankAccountAndDate("31872831997646186715413833", LocalDate.parse("2019-02-21"))
+        }
+    }
+
+    private fun setupObserver() {
+        bankViewModel.taxPayer.observe(this, Observer {
+            if (it==null)
+                return@Observer
+            when(it){
+                is Data.Success->{
+                    textView.text = it.response.toString()
+                }
+                is Data.Loading->{
+                    textView.text = it::class.simpleName
+                }
+                is Data.Error->{
+                    textView.text = it.exception.message
+                }
+            }
+        })
     }
 
 }

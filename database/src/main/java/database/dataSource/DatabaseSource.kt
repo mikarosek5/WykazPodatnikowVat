@@ -15,6 +15,8 @@ interface DatabaseSource {
 
     fun getTaxPayerWithSubjectsById(uid:String):Flowable<TaxPayerWithSubjects>
 
+    fun getLastTaxPayerWithSubjects():Flowable<TaxPayerWithSubjects>
+
     fun saveFullTax(taxToSave: TaxToSave):Completable
 
     suspend fun getBankAccounts(subjectId:String):Flowable<List<BankAccountNumber>>
@@ -26,4 +28,5 @@ interface DatabaseSource {
     suspend fun getAuthorizedClerk(subjectId: String):Flowable<List<AuthorizedClerk>>
 
     suspend fun deleteByTaxUid(taxUid:String):Completable
+
 }

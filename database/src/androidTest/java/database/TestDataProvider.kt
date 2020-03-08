@@ -1,9 +1,10 @@
 package database
 
 import database.entity.*
-import org.threeten.bp.LocalDate
+import org.threeten.bp.LocalDateTime
 
-val taxPayer = TaxPayer("1", LocalDate.now())
+val taxPayer = TaxPayer("1", LocalDateTime.now())
+val taxPayer2 = TaxPayer("2", LocalDateTime.now().plusSeconds(10))
 val subject = Subject(
     "55555",
     "111",

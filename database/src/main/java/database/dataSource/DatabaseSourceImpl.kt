@@ -33,6 +33,9 @@ internal class DatabaseSourceImpl(
     override suspend fun getTaxPayerWithSubjects(): Flowable<List<TaxPayerWithSubjects>> =
         taxPayerDao.getTaxPayerWithSubjects()
 
+    override fun getLastTaxPayerWithSubjects(): Flowable<TaxPayerWithSubjects> =
+        taxPayerDao.getLastTaxPayerWithSubjects()
+
 
     override suspend fun getBankAccounts(subjectId: String) =
         bankAccountDao.getAllBySubjectId(subjectId)
