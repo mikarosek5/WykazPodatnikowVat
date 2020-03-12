@@ -26,8 +26,8 @@
         tools:layout="@layout/verify_fragment"
         android:label="VerifyFragment" />
     <fragment
-        android:id="@+id/code_regon"
-        android:name="com.example.wykaz_podatnikow_vat.ui.regon.RegonFragment"
+        android:id="@+id/code_regon_nip"
+        android:name="com.example.wykaz_podatnikow_vat.ui.regon_nip.RegonNipFragment"
         android:label="regon_fragment"
         tools:layout="@layout/regon_fragment" />
 </navigation>

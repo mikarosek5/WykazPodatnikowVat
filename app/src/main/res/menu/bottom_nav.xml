@@ -13,9 +13,9 @@
         android:icon="@drawable/ic_assignment_turned_in_black_24dp"
         android:title="verify" />
     <item
-        android:id="@+id/code_regon"
+        android:id="@+id/code_regon_nip"
         android:icon="@drawable/ic_assignment_turned_in_black_24dp"
-        android:title="Regon" />
+        android:title="Nip/Regon" />
     <item
         android:id="@+id/history"
         android:icon="@drawable/ic_assignment_turned_in_black_24dp"

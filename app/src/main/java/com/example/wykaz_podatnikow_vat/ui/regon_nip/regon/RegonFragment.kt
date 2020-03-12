@@ -1,4 +1,4 @@
-package com.example.wykaz_podatnikow_vat.ui.regon
+package com.example.wykaz_podatnikow_vat.ui.regon_nip.regon
 
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
@@ -21,7 +21,7 @@ class RegonFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.regon_fragment, container, false)
+        return inflater.inflate(R.layout.regon_fragment2, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
