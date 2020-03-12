@@ -6,7 +6,7 @@ import org.threeten.bp.LocalDate
 import org.threeten.bp.LocalDateTime
 
 @Entity(tableName = "TaxPayer")
-class TaxPayer(
+data class TaxPayer(
     @PrimaryKey
     val uid: String,
     val downloadedDate:LocalDateTime

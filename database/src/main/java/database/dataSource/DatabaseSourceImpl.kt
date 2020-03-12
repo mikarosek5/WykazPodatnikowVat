@@ -15,22 +15,16 @@ internal class DatabaseSourceImpl(
     private val bankAccountDao: BankAccountDao,
     private val authorizedClerDao: AuthorizedClerDao
 ) : DatabaseSource {
-    override  fun saveFullTax(taxToSave: TaxToSave): Completable {
-        return Completable.concatArray(
-            taxPayerDao.insert(taxToSave.taxPayer),
-            saveSubjects(taxToSave.subjectList),
-            saveAuthorizedClerk(taxToSave.authorizedClerkList),
-            saveBankAccount(taxToSave.bankAccountNumberList),
-            savePartner(taxToSave.partnerList),
-            saveRepresentative(taxToSave.representativeList)
-        )
-
+    override fun saveFullTax(taxToSave: TaxToSave): Completable {
+        return taxPayerDao.insert(taxToSave.taxPayer).doOnComplete {
+            onTaxPayerComplete(taxToSave)
+        }
     }
 
     override suspend fun deleteByTaxUid(taxUid: String) =
         taxPayerDao.deleteById(taxUid)
 
-    override suspend fun getTaxPayerWithSubjects(): Flowable<List<TaxPayerWithSubjects>> =
+    override fun getTaxPayerWithSubjects(): Flowable<List<TaxPayerWithSubjects>> =
         taxPayerDao.getTaxPayerWithSubjects()
 
     override fun getLastTaxPayerWithSubjects(): Flowable<TaxPayerWithSubjects> =
@@ -49,7 +43,8 @@ internal class DatabaseSourceImpl(
     override suspend fun getAuthorizedClerk(subjectId: String) =
         authorizedClerDao.getAllBySubjectId(subjectId)
 
-    override fun getTaxPayerWithSubjectsById(uid: String) = taxPayerDao.findTaxPayerWithSubjectsById(uid)
+    override fun getTaxPayerWithSubjectsById(uid: String) =
+        taxPayerDao.findTaxPayerWithSubjectsById(uid)
 
     private fun saveSubjects(subjects: List<Subject>) =
         subjectDao.insertMany(*subjects.toTypedArray())
@@ -65,5 +60,19 @@ internal class DatabaseSourceImpl(
 
     private fun saveAuthorizedClerk(authorizedClerks: List<AuthorizedClerk>) =
         authorizedClerDao.insertMany(*authorizedClerks.toTypedArray())
+
+    private fun onTaxPayerComplete(taxToSave: TaxToSave) =
+        saveSubjects(taxToSave.subjectList).doOnComplete {
+            onSubjectComplete(taxToSave)
+        }.blockingAwait()
+
+    private fun onSubjectComplete(taxToSave: TaxToSave) =
+        Completable.concatArray(
+            saveAuthorizedClerk(taxToSave.authorizedClerkList),
+            saveBankAccount(taxToSave.bankAccountNumberList),
+            savePartner(taxToSave.partnerList),
+            saveRepresentative(taxToSave.representativeList)
+        )
+
 
 }

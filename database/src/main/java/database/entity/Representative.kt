@@ -16,7 +16,7 @@ import androidx.room.PrimaryKey
 
     )]
 )
-class Representative(
+data class Representative(
     @PrimaryKey
     val nip: String,
     val companyName: String?,

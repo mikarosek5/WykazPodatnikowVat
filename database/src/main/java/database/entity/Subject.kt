@@ -14,7 +14,7 @@ import androidx.room.PrimaryKey
         onUpdate = ForeignKey.NO_ACTION
 
     )])
-class Subject(
+data class Subject(
     @PrimaryKey
     val subjectNip: String,
     val name: String?,

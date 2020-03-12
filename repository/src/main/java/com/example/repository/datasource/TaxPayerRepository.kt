@@ -7,6 +7,6 @@ import org.threeten.bp.LocalDate
 interface TaxPayerRepository {
 
     fun getTaxAndSaveIntoBase(bankNumber:String, date:LocalDate):Flowable<TaxPayerWithSubjects>
-    suspend fun getByNipNumber()
-    suspend fun getHistory(): Flowable<List<TaxPayerWithSubjects>>
+    fun getByNipNumber()
+    fun getHistory(): Flowable<List<TaxPayerWithSubjects>>
 }

@@ -17,7 +17,7 @@ import androidx.room.PrimaryKey
 
     )]
 )
-class AuthorizedClerk(
+data class AuthorizedClerk(
     @PrimaryKey
     val nip: String,
     val companyName: String?,

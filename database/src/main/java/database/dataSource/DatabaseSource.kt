@@ -11,7 +11,7 @@ import io.reactivex.Flowable
 
 interface DatabaseSource {
 
-    suspend fun getTaxPayerWithSubjects():Flowable<List<TaxPayerWithSubjects>>
+    fun getTaxPayerWithSubjects():Flowable<List<TaxPayerWithSubjects>>
 
     fun getTaxPayerWithSubjectsById(uid:String):Flowable<TaxPayerWithSubjects>
 

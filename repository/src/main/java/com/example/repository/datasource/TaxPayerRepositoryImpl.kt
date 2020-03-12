@@ -8,6 +8,7 @@ import database.dataSource.save.TaxToSave
 import database.merged.TaxPayerWithSubjects
 import io.reactivex.Flowable
 import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.functions.Action
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
 import org.threeten.bp.LocalDate
@@ -15,7 +16,7 @@ import org.threeten.bp.LocalDate
 internal class TaxPayerRepositoryImpl(
     private val networkSource: NetworkSource,
     private val databaseSource: DatabaseSource,
-    val taxDisposable: CompositeDisposable
+    private val taxDisposable: CompositeDisposable
 ) : TaxPayerRepository {
 
 
@@ -23,8 +24,9 @@ internal class TaxPayerRepositoryImpl(
         bankNumber: String,
         date: LocalDate
     ): Flowable<TaxPayerWithSubjects> {
-        makeNetworkCall(bankNumber,date)
-        return databaseSource.getLastTaxPayerWithSubjects()
+        return databaseSource.getLastTaxPayerWithSubjects().doOnSubscribe {
+            makeNetworkCall(bankNumber,date)
+        }
     }
 
 
@@ -37,20 +39,20 @@ internal class TaxPayerRepositoryImpl(
             .observeOn(Schedulers.io())
             .map { it.convert() }
             .subscribeBy(
-                onSuccess = { saveResultToBase(it) },
+                onSuccess = {saveResultToBase(it) },
                 onError = { Log.d("MYERROR",it.message?:"")}
             )
         )
     }
 
     private fun saveResultToBase(taxToSave: TaxToSave) {
-        databaseSource.saveFullTax(taxToSave)
+        databaseSource.saveFullTax(taxToSave).test().assertComplete()
     }
 
-    override suspend fun getByNipNumber() {
+    override fun getByNipNumber() {
         TODO("implement cache")
     }
 
-    override suspend fun getHistory() =
+    override fun getHistory() =
         databaseSource.getTaxPayerWithSubjects()
 }

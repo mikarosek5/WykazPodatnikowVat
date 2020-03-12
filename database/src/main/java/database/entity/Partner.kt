@@ -15,7 +15,7 @@ import androidx.room.PrimaryKey
 
     )]
 )
-class Partner(
+data class Partner(
     @PrimaryKey
     val nip: String,
     val companyName: String?,

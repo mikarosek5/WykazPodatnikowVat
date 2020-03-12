@@ -24,4 +24,6 @@ val databaseModule = module {
 private fun setupDatabase(context: Context) =
     Room.databaseBuilder(context.applicationContext, TaxDatabase::class.java, "Tax.db").build()
 
-private fun setupTestDatabase(context: Context) = Room.inMemoryDatabaseBuilder(context,TaxDatabase::class.java).allowMainThreadQueries().build()
+private fun setupTestDatabase(context: Context) = Room.inMemoryDatabaseBuilder(context,TaxDatabase::class.java).build()
+
+//allowMainThreadDB

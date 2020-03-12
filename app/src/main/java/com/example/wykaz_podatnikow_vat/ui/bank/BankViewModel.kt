@@ -27,13 +27,8 @@ class BankViewModel(
         disposable.add(repository
             .getTaxAndSaveIntoBase(bankNumber,date)
             .observeOn(Schedulers.io())
-            .observeOn(Schedulers.io()).subscribeBy(
-                onNext = {
-                    Log.d("TAXTAX",it.toString())
-                    _taxPayer.postValue(Data.Success(it))
-                },
-                onError = {_taxPayer.postValue(Data.Error(it))}
-            ))
+            .subscribeOn(Schedulers.io())
+            .subscribe { _taxPayer.postValue(Data.Success(it)) })
     }
 
 

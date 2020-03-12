@@ -19,7 +19,7 @@ data class Subject(
     @Json(name = "partners")
     val partners: List<Partner>,
     @Json(name = "pesel")
-    val pesel: String,
+    val pesel: String?,
     @Json(name = "registrationDenialBasis")
     val registrationDenialBasis: String?,
     @Json(name = "registrationDenialDate")
